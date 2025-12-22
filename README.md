@@ -6,7 +6,7 @@
 > Chi Zhang          
 
 We present CryoETGS, a differentiable learning framework that **reconstruct**s tomograms through adaptive 3D Gaussian representations of biological structures for **cryo-ET**.
-<img width="1000" src="./figures/cryoETGS_pipeline.png" alt="pipeline">
+<img width="888" src="./cryoETGS_pipeline.png" alt="pipeline">
 
 
 📖 Abstract
