@@ -1,4 +1,0 @@
-# ninja log v6
-1	9266	1719145628866202661	/home/feng/Desktop/cryoET-reconstruction/cryoET-3DGS/submodules/simple-knn/build/temp.linux-x86_64-cpython-310/simple_knn.o	fc5a31901f77c4e4
-0	17485	1719145628866202661	/home/feng/Desktop/cryoET-reconstruction/cryoET-3DGS/submodules/simple-knn/build/temp.linux-x86_64-cpython-310/ext.o	2e05212b5a424851
-2	40874	1719145628870202661	/home/feng/Desktop/cryoET-reconstruction/cryoET-3DGS/submodules/simple-knn/build/temp.linux-x86_64-cpython-310/spatial.o	c96f9a5916da74a6
