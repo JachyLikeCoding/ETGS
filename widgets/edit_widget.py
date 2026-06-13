@@ -4,7 +4,7 @@ import time
 import uuid
 from imgui_bundle import imgui, imgui_color_text_edit as edit
 import inspect
-sys.path.append("/media/feng/2480CDB880CD90AA/cryoET-reconstruction/cryoET-3DGS/cryoET-3dgs")
+sys.path.append("/media/feng/2480CDB880CD90AA/cryoET-reconstruction/cryoET-3DGS/cryoET_3dgs")
 
 from splatviz_utils.gui_utils import imgui_utils
 from splatviz_utils.gui_utils.easy_imgui import label
@@ -93,7 +93,7 @@ class EditWidget(Widget):
         language = edit.TextEditor.LanguageDefinition.python()
         custom_identifiers = {
             "self": edit.TextEditor.Identifier(m_declaration=get_description(GaussianRenderer)),
-            "gs": edit.TextEditor.Identifier(m_declaration=get_description(GaussianModel_cryoET)),
+            "gaussian": edit.TextEditor.Identifier(m_declaration=get_description(GaussianModel_cryoET)),
             "render_cam": edit.TextEditor.Identifier(m_declaration=get_description(CustomTilt)),
             "render": edit.TextEditor.Identifier(
                 m_declaration=get_description(

@@ -13,7 +13,7 @@ from widgets.widget import Widget
 class EvalWidget(Widget):
     def __init__(self, viz):
         super().__init__(viz, "Eval")
-        self.text = "gs"
+        self.text = "gaussian"
         self.hist_cache = dict()
         self.use_cache_dict = dict()
 

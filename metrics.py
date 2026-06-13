@@ -4,11 +4,13 @@ import os,sys
 import numpy as np
 import torch
 import torchvision.transforms.functional as tf
-from utils.loss_utils import ssim
+sys.path.append("/media/feng/2480CDB880CD90AA/cryoET-reconstruction/cryoET-3DGS/cryoET_3dgs")
+
+from cryoET_3dgs.utils.loss_utils import ssim
 from lpipsPyTorch import lpips
 import json
 from tqdm import tqdm
-from utils.image_utils import psnr
+from cryoET_3dgs.utils.image_utils import psnr
 from argparse import ArgumentParser
 
 
@@ -41,11 +43,11 @@ def evaluate(model_paths):
             full_dict_polytopeonly[scene_dir] = {}
             per_view_dict_polytopeonly[scene_dir] = {}
 
-            test_dir = Path(scene_dir) / "test"
-
+            test_dir = Path(scene_dir) / "train"
+            print('test dir: ', test_dir)
             for method in os.listdir(test_dir):
+                method = "ours" + method[4:] 
                 print("Method:", method)
-
                 full_dict[scene_dir][method] = {}
                 per_view_dict[scene_dir][method] = {}
                 full_dict_polytopeonly[scene_dir][method] = {}
@@ -54,6 +56,8 @@ def evaluate(model_paths):
                 method_dir = test_dir / method
                 gt_dir = method_dir/ "gt"
                 renders_dir = method_dir / "renders"
+                print('gt_dir: ', gt_dir)
+                print('renders_dir: ', renders_dir)
                 renders, gts, image_names = readImages(renders_dir, gt_dir)
 
                 ssims = []
@@ -95,3 +99,5 @@ if __name__ == "__main__":
     parser.add_argument("--model_paths", '-m', required=True, nargs="+", type=str, default=[])
     args = parser.parse_args()
     evaluate(args.model_paths)
+
+    # python metrics.py --model_path /media/feng/2480CDB880CD90AA/cryoET-reconstruction/cryoET-3DGS/output/cryoet-10643/2025_03_07_11_31_16/ --image_height 540 --image_width 540 --volume_x 540 --volume_y 540 --volume_z 540 --iteration 5000

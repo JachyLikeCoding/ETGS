@@ -18,7 +18,7 @@ class TrainingWidget(Widget):
         self.plots = EasyDict(
             num_gaussians=dict(values=[], dtype=int),
             loss=dict(values=[], dtype=float),
-            sh_degree=dict(values=[], dtype=int),
+            # sh_degree=dict(values=[], dtype=int),
         )
         self.stop_at_value = -1
         self.stop_training = False

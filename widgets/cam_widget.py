@@ -20,7 +20,9 @@ class TiltWidget(Widget):
         self.fov = 45
         self.radius = 3
         self.lookat_point = torch.tensor((0.0, 0.0, 0.0))
-        self.forward = torch.tensor([0.0, -1.0, 0.0])
+        # self.forward = torch.tensor([0.0, -1.0, 0.0])
+        self.forward = torch.tensor([-1.0, 0.0, 0.0])
+
         self.tilt_angle = 0 # 当前倾斜角度
         self.cam_pos = torch.tensor([0.0, 0.0, 1.0])
         self.up_vector = torch.tensor([0.0, 0.0, 1.0]) # 固定Up方向为Z轴
@@ -36,6 +38,8 @@ class TiltWidget(Widget):
         self.current_control_mode = 0
         self.last_drag_delta = imgui.ImVec2(0, 0)
 
+        self.change_tilt = False
+
     @imgui_utils.scoped_by_object_id
     def __call__(self, show: bool):
         viz = self.viz
@@ -47,7 +51,15 @@ class TiltWidget(Widget):
         if show:
             label("Tilt Angle", viz.label_w)
             self.tilt_angle = slider(self.tilt_angle, "tilt_angle", -90, 90, format="%.1f°")
-
+            
+            imgui.same_line()
+            if imgui_utils.button("Change Tilt Axis", width=viz.button_large_w):
+                self.change_tilt = True
+                print('change_tilt')
+                self.tilt_angle = 0
+                self.pose.yaw = 0
+                self.pose.pitch = 0
+                
             label("Drag Speed", viz.label_w)
             self.drag_speed = slider(self.drag_speed, "drag_speed", 0.001, 0.1, log=True)
 
@@ -59,18 +71,26 @@ class TiltWidget(Widget):
                 self.tilt_angle = 0
                 self.pose.yaw = 0
                 self.pose.pitch = 0
-        self.update_view()
+
+        self.update_view(self.change_tilt)
 
 
-    def update_view(self):
+    def update_view(self, change_tilt):
         # 根据倾斜角度更新投影方向
         tilt_radians = np.deg2rad(self.tilt_angle)
-
-        rotation_matrix = torch.tensor([
-            [np.cos(tilt_radians), 0, np.sin(tilt_radians)],
-            [0,1,0],
-            [-np.sin(tilt_radians), 0, np.cos(tilt_radians)]
-        ], dtype=torch.float32)
+        
+        if not change_tilt:
+            rotation_matrix = torch.tensor([
+                [0,1,0],
+                [np.cos(tilt_radians), 0, np.sin(tilt_radians)],
+                [-np.sin(tilt_radians), 0, np.cos(tilt_radians)]
+            ], dtype=torch.float32)
+        else:
+            rotation_matrix = torch.tensor([
+                [np.cos(tilt_radians), 0, np.sin(tilt_radians)],
+                [0,1,0],
+                [-np.sin(tilt_radians), 0, np.cos(tilt_radians)]
+            ], dtype=torch.float32)
 
         self.forward = rotation_matrix @ torch.tensor([0.0, 0.0, -1.0], dtype=torch.float32)
         self.cam_pos = torch.tensor([0.0, 0.0, 0.0], dtype=torch.float32) # 固定为原点

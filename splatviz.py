@@ -3,7 +3,7 @@ import numpy as np
 import torch
 import sys
 
-sys.path.append("/media/feng/2480CDB880CD90AA/cryoET-reconstruction/cryoET-3DGS/cryoET-3dgs")
+sys.path.append("/media/feng/2480CDB880CD90AA/cryoET-reconstruction/cryoET-3DGS/cryoET_3dgs")
 torch.set_printoptions(precision=2, sci_mode=False)
 np.set_printoptions(precision=2)
 
@@ -33,12 +33,12 @@ from widgets import (
 
 
 class Splatviz(imgui_window.ImguiWindow):
-    def __init__(self, data_path, mode, host, port, ggd_path=""):
+    def __init__(self, data_path, mode, host, port, ggd_path="", data=None):
         self.code_font_path = "resources/fonts/jetbrainsmono/JetBrainsMono-Regular.ttf"
         self.regular_font_path = "resources/fonts/source_sans_pro/SourceSansPro-Regular.otf"
 
         super().__init__(
-            title="splatviz",
+            title="CryoETGS-VIS",
             window_width=1920,
             window_height=1080,
             font=self.regular_font_path,
@@ -65,7 +65,7 @@ class Splatviz(imgui_window.ImguiWindow):
                 edit_widget.EditWidget(self),
                 eval_widget.EvalWidget(self),
             ]
-            renderer = GaussianRenderer()
+            renderer = GaussianRenderer(data)
         elif mode == "decoder":
             self.widgets = [
                 load_widget_pkl.LoadWidget(self, data_path),
@@ -96,6 +96,8 @@ class Splatviz(imgui_window.ImguiWindow):
             update_all_the_time = True
         else:
             raise NotImplementedError(f"Mode '{mode}' not recognized.")
+
+        self.tilt_axis = 1
 
         self.renderer = RendererWrapper(renderer, update_all_the_time)
         self._tex_img = None
