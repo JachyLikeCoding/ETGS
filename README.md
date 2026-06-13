@@ -43,7 +43,7 @@ pip install -r requirements.txt
 
 # Compile the CUDA rasterizer
 pip install ./cryoETGS/submodules/simple-knn
-pip install ./cryoETGS/submodules/diff-gaussian-rasterization
+pip install ./cryoETGS/submodules/diff-gaussian-rasterization_voxelization_cryoet
 ```
 
 ## Data preparation
@@ -65,8 +65,6 @@ python train.py --config_name xxx
 ```
 
 
-
-
 ✏️ Citation
 ---------------
 If you find CryoETGS useful in your research or refer to the provided baseline results, please star :star: this repository and consider citing :pencil::
@@ -83,4 +81,4 @@ If you find CryoETGS useful in your research or refer to the provided baseline r
 
 Contact
 ---------------
-For questions or issues, please open a GitHub issue or contact chizhang_cs@zju.edu.cn
+For questions, please contact 1098587201@qq.com. Because I can't access GitHub at any time right now.
